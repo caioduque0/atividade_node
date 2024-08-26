@@ -1,10 +1,14 @@
 const express = require('express');
 const axios = require('axios');
+const rotas = require('./routes');
 
 const app = express();
-const port = 3000;
+const PORT = process.env.PORT || 3000;
 
 const cepRegex = /^[0-9]{5}-?[0-9]{3}$/; // Expressão regular para validar o CEP
+
+app.use(express.json());
+app.use('/api', rotas);
 
 app.get('/', (req, res) => {
     res.send('Hello world');
@@ -28,6 +32,6 @@ app.get('/consulta-cep/:cep', async (req, res) => {
     }
 });
 
-app.listen(port, () => {
-    console.log(`Servidor rodando em http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Servidor rodando na porta ${PORT}`);
 });
